@@ -14,7 +14,7 @@
 
     <ItemGroup>
       <None Update="DAL\DB\social_network.db">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 

@@ -43,8 +43,6 @@ namespace SocialNetwork.PLL.Views
 
         public void Delete(User user)
         {
-            Console.WriteLine("Ваши друзья:");
-            Show(user);
             Console.WriteLine("Введите id друга для удаления:");
             try
             {

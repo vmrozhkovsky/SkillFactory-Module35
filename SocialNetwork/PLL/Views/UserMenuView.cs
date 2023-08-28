@@ -84,6 +84,7 @@ namespace SocialNetwork.PLL.Views
                         }
                     case "d":
                         {
+                            Program.userFriendView.Show(user.Friends);
                             Program.friendView.Delete(user);
                             break;
                         }
