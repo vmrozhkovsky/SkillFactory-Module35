@@ -1,9 +1,4 @@
-using Microsoft.VisualStudio.TestPlatform.TestHost;
-using SocialNetwork.BLL.Exceptions;
-using SocialNetwork.BLL.Models;
-using SocialNetwork.BLL.Services;
 using SocialNetwork.DAL.Repositories;
-using SocialNetwork.PLL.Views;
 
 namespace SocialNetwork.Tests;
 
@@ -12,6 +7,7 @@ public class Tests
     public static UserRepository userRepository;
     public static FriendRepository friendRepository;
     
+    // Тест удаления пользователя с Id 1000 (предполагается, что не существует). Возвращаемое значение метода DeleteById не должно быть равно 1.
     [Test]
     public void UserDeleteByIdMustNotReturnOne()
     {
@@ -19,10 +15,11 @@ public class Tests
         Assert.AreNotEqual(1, userRepository.DeleteById(1000));
     }
     
+    // Тест удаления друга с Id 1000 (предполагается, что не существует). Возвращаемое значение метода DeleteById не должно быть равно 1.
     [Test]
     public void FriendDeleteByIdMustNotReturnOne()
     {
         friendRepository = new FriendRepository();
-        Assert.AreNotEqual(1, friendRepository.DeleteById(1));
+        Assert.AreNotEqual(1, friendRepository.DeleteById(1000));
     }
 }
