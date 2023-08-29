@@ -42,6 +42,7 @@ namespace SocialNetwork
             userOutcomingMessageView = new UserOutcomingMessageView();
             friendView = new FriendView(userService);
             userFriendView = new UserFriendView();
+            userRepository = new UserRepository();
 
             while (true)
             {

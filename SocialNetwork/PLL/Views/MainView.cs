@@ -29,7 +29,8 @@ namespace SocialNetwork.PLL.Views
                     }
                 case "3":
                 {
-                    Program.userInfoView.ShowAll(Program.userRepository.FindAll());
+                    var test = Program.userRepository.FindAll();
+                    Program.userInfoView.ShowAll(test);
                     break;
                 }
             }

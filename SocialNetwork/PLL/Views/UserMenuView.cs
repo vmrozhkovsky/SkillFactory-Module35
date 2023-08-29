@@ -31,10 +31,16 @@ namespace SocialNetwork.PLL.Views
                 Console.WriteLine("Просмотреть исходящие сообщения (нажмите 6)");
                 Console.WriteLine("Просмотреть моих друзей (нажмите 7)");
                 Console.WriteLine("Выйти из профиля (нажмите 8)");
+                Console.WriteLine("Выйти из профиля (нажмите 9)");
 
                 string keyValue = Console.ReadLine();
 
                 if (keyValue == "8") break;
+                if (keyValue == "9")
+                {
+                    Program.userRepository.DeleteById(user.Id);
+                    break;
+                }
 
                 switch (keyValue)
                 {
@@ -88,6 +94,11 @@ namespace SocialNetwork.PLL.Views
                             Program.friendView.Delete(user);
                             break;
                         }
+                    // case "9":
+                    // {
+                    //     Program.userRepository.DeleteById(user.Id);
+                    //     break;
+                    // }
                 }
             }
         }

@@ -3,6 +3,7 @@ using SocialNetwork.BLL.Models;
 using SocialNetwork.BLL.Services;
 using SocialNetwork.PLL.Helpers;
 using System;
+using SocialNetwork.DAL.Entities;
 
 namespace SocialNetwork.PLL.Views
 {
@@ -43,17 +44,27 @@ namespace SocialNetwork.PLL.Views
 
         public void Delete(User user)
         {
-            Console.WriteLine("Введите id друга для удаления:");
+            Console.WriteLine("Введите Email друга для удаления:");
             try
             {
                 var userDeleteFriendData = new UserDeleteFriendData();
-                userDeleteFriendData.FriendId = int.Parse(Console.ReadLine());
+                userDeleteFriendData.UserId = user.Id;
+                userDeleteFriendData.FriendEmail = Console.ReadLine();
+                // userDeleteFriendData.FriendId = int.Parse(Console.ReadLine());
                 userService.DeleteFriend(userDeleteFriendData);
+                SuccessMessage.Show("Вы удалили пользователя из друзей!");
             }
             catch (FormatException)
             {
-                Console.WriteLine("Неверный ввод!");
-                throw;
+                AlertMessage.Show("Неверный ввод!");
+            }
+            catch(UserNotFoundException)
+            {
+                AlertMessage.Show("Пользователя с таким Email не существует, либо его нет у вас в друзьях!");
+            }
+            catch(Exception)
+            {
+                AlertMessage.Show("Ошибка при удалении пользователя!");
             }
            
         }

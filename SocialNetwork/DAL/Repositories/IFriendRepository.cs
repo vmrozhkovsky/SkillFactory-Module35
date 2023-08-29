@@ -6,6 +6,6 @@ public interface IFriendRepository
 {
     int Create(FriendEntity friendEntity);
     IEnumerable<FriendEntity> FindAllByUserId(int userId);
-    IEnumerable<FriendEntity> FindByFriendId(int friendId);
-    int Delete(int id);
+    FriendEntity FindById(int friendId, int userId);
+    int DeleteById(int id);
 }

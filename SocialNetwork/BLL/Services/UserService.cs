@@ -125,10 +125,13 @@ namespace SocialNetwork.BLL.Services
         }
         public void DeleteFriend(UserDeleteFriendData userDeleteFriendData)
         {
-            var findFriendId = friendRepository.FindByFriendId(userDeleteFriendData.FriendId);
-            if (findFriendId is null) 
+            var findUserEntity = userRepository.FindByEmail(userDeleteFriendData.FriendEmail);
+            if (findUserEntity is null)
                 throw new UserNotFoundException();
-            if (this.friendRepository.Delete(userDeleteFriendData.FriendId) == 0)
+            var findFriendEntity = friendRepository.FindById(findUserEntity.id, userDeleteFriendData.UserId);
+            if (findFriendEntity is null)
+                throw new UserNotFoundException();
+            if (friendRepository.DeleteById(findFriendEntity.id) == 0)
                 throw new Exception();
         }
 
