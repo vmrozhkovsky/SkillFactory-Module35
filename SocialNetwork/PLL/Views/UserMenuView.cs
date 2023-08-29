@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using SocialNetwork.DAL.Repositories;
 
 namespace SocialNetwork.PLL.Views
 {
@@ -31,7 +32,7 @@ namespace SocialNetwork.PLL.Views
                 Console.WriteLine("Просмотреть исходящие сообщения (нажмите 6)");
                 Console.WriteLine("Просмотреть моих друзей (нажмите 7)");
                 Console.WriteLine("Выйти из профиля (нажмите 8)");
-                Console.WriteLine("Выйти из профиля (нажмите 9)");
+                Console.WriteLine("Удалить профиль (нажмите 9)");
 
                 string keyValue = Console.ReadLine();
 
@@ -92,6 +93,7 @@ namespace SocialNetwork.PLL.Views
                         {
                             Program.userFriendView.Show(user.Friends);
                             Program.friendView.Delete(user);
+                            user.Friends = Program.userService.GetFriendsByUserId(user.Id);
                             break;
                         }
                     // case "9":

@@ -16,7 +16,7 @@ namespace SocialNetwork.BLL.Models
         public IEnumerable<Message> IncomingMessages { get; }
         public IEnumerable<Message> OutgoingMessages { get; }
 
-        public IEnumerable<User> Friends { get; }
+        public IEnumerable<User> Friends { get; set; }
 
         public User(
             int id, 

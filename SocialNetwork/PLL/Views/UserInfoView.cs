@@ -26,7 +26,7 @@ namespace SocialNetwork.PLL.Views
             foreach (var user in users)
             {
                 Console.WriteLine("Идентификатор: {0}", user.id);
-                Console.WriteLine("Мой почтовый адрес: {0}", user.email);
+                Console.WriteLine("Почтовый адрес: {0}", user.email);
             }
         }
     }
