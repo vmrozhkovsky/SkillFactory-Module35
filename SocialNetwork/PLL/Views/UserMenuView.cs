@@ -22,22 +22,22 @@ namespace SocialNetwork.PLL.Views
             {
                 Console.WriteLine("Входящие сообщения: {0}", user.IncomingMessages.Count());
                 Console.WriteLine("Исходящие сообщения: {0}", user.OutgoingMessages.Count());
-                Console.WriteLine("Мои друзья: {0}", user.Friends.Count());
+                Console.WriteLine("Мои друзья: {0}\n", user.Friends.Count());
                 Console.WriteLine("Просмотреть информацию о моём профиле (нажмите 1)");
-                Console.WriteLine("Редактировать мой профиль (нажмите 2)");
-                Console.WriteLine("Добавить в друзья (нажмите 3)");
-                Console.WriteLine("Удалить из друзей (нажмите d)");
-                Console.WriteLine("Написать сообщение (нажмите 4)");
-                Console.WriteLine("Просмотреть входящие сообщения (нажмите 5)");
-                Console.WriteLine("Просмотреть исходящие сообщения (нажмите 6)");
-                Console.WriteLine("Просмотреть моих друзей (нажмите 7)");
+                Console.WriteLine("Редактировать мой профиль (нажмите 2)\n");
+                Console.WriteLine("Просмотреть моих друзей (нажмите 3)");
+                Console.WriteLine("Добавить в друзья (нажмите 4)");
+                Console.WriteLine("Удалить друзей (нажмите df)\n");
+                Console.WriteLine("Написать сообщение (нажмите 5)");
+                Console.WriteLine("Просмотреть входящие сообщения (нажмите 6)");
+                Console.WriteLine("Просмотреть исходящие сообщения (нажмите 7)\n");
                 Console.WriteLine("Выйти из профиля (нажмите 8)");
-                Console.WriteLine("Удалить профиль (нажмите 9)");
+                Console.WriteLine("Удалить профиль (нажмите da)");
 
                 string keyValue = Console.ReadLine();
 
                 if (keyValue == "8") break;
-                if (keyValue == "9")
+                if (keyValue == "da")
                 {
                     Program.userRepository.DeleteById(user.Id);
                     break;
@@ -57,50 +57,45 @@ namespace SocialNetwork.PLL.Views
                             break;
                         }
 
-                    case "3":
+                    case "4":
                         {
                             Program.friendView.Show(user);
                             user = userService.FindById(user.Id);
                             break;
                         }
 
-                    case "4":
+                    case "5":
                         {
                             Program.messageSendingView.Show(user);
                             user = userService.FindById(user.Id);
                             break;
                         }
 
-                    case "5":
+                    case "6":
                         {
 
                             Program.userIncomingMessageView.Show(user.IncomingMessages);
                             break;
                         }
 
-                    case "6":
+                    case "7":
                         {
                             Program.userOutcomingMessageView.Show(user.OutgoingMessages);
                             break;
                         }
 
-                    case "7":
+                    case "3":
                         {
                             Program.userFriendView.Show(user.Friends);
                             break;
                         }
-                    case "d":
+                    case "df":
                         {
                             Program.userFriendView.Show(user.Friends);
                             Program.friendView.Delete(user);
-                            user.Friends = Program.userService.GetFriendsByUserId(user.Id);
+                            user = userService.FindById(user.Id);
                             break;
                         }
-                    // case "9":
-                    // {
-                    //     Program.userRepository.DeleteById(user.Id);
-                    //     break;
-                    // }
                 }
             }
         }

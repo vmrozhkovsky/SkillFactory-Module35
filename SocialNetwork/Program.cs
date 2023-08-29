@@ -12,7 +12,8 @@ namespace SocialNetwork
     class Program
     {
         static MessageService messageService;
-        public static UserService userService;
+        static UserService userService;
+        
         public static MainView mainView;
         public static RegistrationView registrationView;
         public static AuthenticationView authenticationView;
@@ -25,7 +26,6 @@ namespace SocialNetwork
         public static FriendView friendView;
         public static UserFriendView userFriendView;
         public static UserRepository userRepository;
-        public static FriendRepository friendRepository;
 
         static void Main(string[] args)
         {
@@ -44,7 +44,6 @@ namespace SocialNetwork
             friendView = new FriendView(userService);
             userFriendView = new UserFriendView();
             userRepository = new UserRepository();
-            friendRepository = new FriendRepository();
 
             while (true)
             {

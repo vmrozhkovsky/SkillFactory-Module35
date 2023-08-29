@@ -50,7 +50,6 @@ namespace SocialNetwork.PLL.Views
                 var userDeleteFriendData = new UserDeleteFriendData();
                 userDeleteFriendData.UserId = user.Id;
                 userDeleteFriendData.FriendEmail = Console.ReadLine();
-                // userDeleteFriendData.FriendId = int.Parse(Console.ReadLine());
                 userService.DeleteFriend(userDeleteFriendData);
                 SuccessMessage.Show("Вы удалили пользователя из друзей!");
             }
