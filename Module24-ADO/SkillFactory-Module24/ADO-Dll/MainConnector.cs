@@ -8,7 +8,6 @@ public class MainConnector
     SqlConnection connection;
     public async Task < bool > ConnectAsync() {
         bool result;
-        // SqlConnection connection;
         try {
             connection = new SqlConnection(ConnectionString.MsSqlConnection);
             await connection.OpenAsync();
@@ -21,9 +20,9 @@ public class MainConnector
         return result;
     }
     
-    // public async void DisconnectAsync() {
-    //     if (connection.State == ConnectionState.Open) {
-    //         await connection.CloseAsync();
-    //     }
-    // }
+    public async void DisconnectAsync() {
+        if (connection.State == ConnectionState.Open) {
+            await connection.CloseAsync();
+        }
+    }
 }
