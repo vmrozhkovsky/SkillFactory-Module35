@@ -9,6 +9,7 @@ public class UserRepository
         this.db = db;
     }
 
+    // Метод для добавления пользователя в базу
     public void AddUser(string name, string role, string email)
     {
         try
@@ -25,6 +26,7 @@ public class UserRepository
 
     }
 
+    // Метод для удаления пользователя из базы
     public void DeleteUserById(int userId)
     {
         try
@@ -40,6 +42,7 @@ public class UserRepository
 
     }
 
+    // Метод для изменения параметров пользователя в базе
     public void UpdateUserById(int userId, string? name = null, string? role = null, string? email = null)
     {
         try
@@ -60,6 +63,8 @@ public class UserRepository
         }
     }
 
+    // Метод возвращает список всех пользователей в базе, если не указан userID
+    // Если указан userID метод вернет список из одного пользователя.
     public List<User> ShowUserById(int userId = 0)
     {
         if (userId == 0)
@@ -71,6 +76,40 @@ public class UserRepository
         {
             var userById = db.Users.Where(user => user.Id == userId).ToList();
             return userById;
+        }
+    }
+    
+    // Метод возвращает количество книг находящихся на руках у определенного пользователя. 
+    public int CountBooksByUser(int userId)
+    {
+        var countBooksByUser = db.Books.Where(book => book.UserId == userId).Count();
+        return countBooksByUser;
+    }
+
+    // Метод добавления определенной книги определенному пользователю 
+    public void AddBookToUser(User user, Book book)
+    {
+        book.User = user;
+    }
+    
+    // Метод возвращает true, если у определенного пользователя есть определенная книга
+    public bool isBookByUser(User user, Book book)
+    {
+        try
+        {
+            if (book.UserId == user.Id)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
         }
     }
 }

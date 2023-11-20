@@ -9,6 +9,7 @@ public class BookRepository
         this.db = db;
     }
     
+    // Метод добавления книги в базу
     public void AddBook(string name, int year, string genre, string author)
     {
         try
@@ -23,6 +24,7 @@ public class BookRepository
 
     }
 
+    // Метод удаления книги из базы. Принимает на вход Id книги.
     public void DeleteBookById(int bookId)
     {
         try
@@ -36,6 +38,8 @@ public class BookRepository
 
     }
 
+    // Метод для получения списка всех книг в базе, если не указан Id книги.
+    // Если указан, возвращает список из одной определенной книги.
     public List<Book> ShowBooks(int bookId = 0)
     {
         if (bookId == 0)
@@ -50,12 +54,15 @@ public class BookRepository
         }
     }
     
+    // Метод для получения списка книг с определенным жанром. Принимает на вход название жанра.
     public List<Book> ShowBooks(string genre)
     {
          var bookByGenre = db.Books.Where(book => book.Genre == genre).ToList();
          return bookByGenre;
     }
 
+    // Метод для получения последней вышедшей книги, если параметр lastbook == true.
+    // Если lastbook == false, возвращает список книг между определенными датами.
     public List<Book> ShowBooks(bool lastBook, int fromDate = 0, int toDate = 0)
     {
         if (lastBook)
@@ -70,6 +77,9 @@ public class BookRepository
         }
     }
 
+    // Метод возвращает список всех книг, отсортированный в алфавитном порядке по названию, если sortAttribute == alphabet
+    // Если sortAttribute == year возвращает список всех книг, отсортированный по году их выхода.
+    // В зависимости от параметра sortDirection делает это в порядке убывания или возрастания.
     public List<Book> ShowBooks(string sortAttribute, string sortDirection = "asc")
     {
         switch (sortAttribute)
@@ -101,6 +111,7 @@ public class BookRepository
         }
     }
 
+    // Метод возвращает количество книг в базе определенного автора или жанра, в зависимости от параметра attribute
     public int CountBooks(string attribute, string attributeValue)
     {
         switch (attribute)
@@ -115,29 +126,12 @@ public class BookRepository
                 return 0;
         }
     }
-
-    public int CountBooks(int userId)
-    {
-        var countBooksByUser = db.Books.Where(book => book.UserId == userId).Count();
-        return countBooksByUser;
-    }
-
-    public void AddBookToUser(User user, Book book)
-    {
-        book.User = user;
-    }
-
+    
+    // Метод возвращает true, если в базе есть книга с опредеенными именем и автором
     public bool isBookByName(string name, string author)
     {
         var booksByName = db.Books.Where(book => book.Name == name && book.Author == author).ToList();
         if (booksByName.Count > 0)
-            return true;
-        return false;
-    }
-
-    public bool isBookByUser(Book book, User user)
-    {
-        if (book.UserId == user.Id)
             return true;
         return false;
     }
