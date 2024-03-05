@@ -15,6 +15,9 @@ public class BlogRepository : IBlogRepository
   
     public async Task AddUser(User user)
     {
+        user.JoinDate = DateTime.Now;
+        user.Id = Guid.NewGuid();
+        
         // Добавление пользователя
         var entry = _context.Entry(user);
         if (entry.State == EntityState.Detached)
@@ -22,5 +25,10 @@ public class BlogRepository : IBlogRepository
       
         // Сохранение изенений
         await _context.SaveChangesAsync();
+    }
+    public async Task<User[]> GetUsers()
+    {
+        // Получим всех активных пользователей
+        return await _context.Users.ToArrayAsync();
     }
 }

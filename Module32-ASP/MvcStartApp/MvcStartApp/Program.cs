@@ -7,8 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<BlogContext>(options => options.UseSqlServer(connection));
-builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+builder.Services.AddDbContext<BlogContext>(options => options.UseSqlServer(connection), ServiceLifetime.Singleton);
+builder.Services.AddSingleton<IBlogRepository, BlogRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -31,4 +31,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+// app.MapControllerRoute(
+//     name: "users",
+//     pattern: "{controller=Users}/{action=Index}/{id?}");
+//
 app.Run();
