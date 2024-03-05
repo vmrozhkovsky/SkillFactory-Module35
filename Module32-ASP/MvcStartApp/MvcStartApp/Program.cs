@@ -9,6 +9,7 @@ builder.Services.AddControllersWithViews();
 string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<BlogContext>(options => options.UseSqlServer(connection), ServiceLifetime.Singleton);
 builder.Services.AddSingleton<IBlogRepository, BlogRepository>();
+builder.Services.AddSingleton<IRequestRepository, RequestRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

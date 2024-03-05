@@ -1,15 +1,19 @@
-﻿namespace MvcStartApp;
+﻿using MvcStartApp.Models.Db;
+
+namespace MvcStartApp;
 
 public class LoggingMidlleware
 {
     private readonly RequestDelegate _next;
+    private readonly IRequestRepository _requestRepository;
   
     /// <summary>
     ///  Middleware-компонент должен иметь конструктор, принимающий RequestDelegate
     /// </summary>
-    public LoggingMidlleware(RequestDelegate next)
+    public LoggingMidlleware(RequestDelegate next, IRequestRepository requestRepository)
     {
         _next = next;
+        _requestRepository = requestRepository;
     }
     private void LogConsole(HttpContext context)
     {
@@ -28,6 +32,15 @@ public class LoggingMidlleware
         // Используем асинхронную запись в файл
         await File.AppendAllTextAsync(logFilePath, logMessage);
     }
+
+    private async Task LogDb(HttpContext context)
+    {
+        Request request = new Request();
+        request.Date = DateTime.Now;
+        request.Id = Guid.NewGuid();
+        request.Url = $"http://{context.Request.Host.Value + context.Request.Path}";
+        await _requestRepository.AddRequest(request);
+    }
     /// <summary>
     ///  Необходимо реализовать метод Invoke  или InvokeAsync
     /// </summary>
@@ -36,6 +49,7 @@ public class LoggingMidlleware
         // Для логирования данных о запросе используем свойста объекта HttpContext
         LogConsole(context);
         await LogFile(context);
+        await LogDb(context);
         // Передача запроса далее по конвейеру
         await _next.Invoke(context);
     }
