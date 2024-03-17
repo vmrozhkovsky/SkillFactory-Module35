@@ -1,11 +1,29 @@
+using AutheticationService;
+using AutheticationService.Controllers;
+using AutoMapper;
+using ILogger = AutheticationService.ILogger;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
+
+var mapperConfig = new MapperConfiguration((conf) =>
+{
+    conf.AddProfile(new MappingProfile());
+});
+IMapper mapper = mapperConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
+
+builder.Services.AddSingleton<ILogger, Logger>();
+
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
