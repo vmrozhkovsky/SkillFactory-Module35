@@ -1,6 +1,6 @@
 using AutheticationService;
-using AutheticationService.Controllers;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using ILogger = AutheticationService.ILogger;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,11 +8,22 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 
 builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthentication(options => options.DefaultScheme = "Cookies").AddCookie("Cookies", options =>
+{
+    options.Events = new CookieAuthenticationEvents
+    {
+        OnRedirectToLogin = redirectContext =>
+        {
+            redirectContext.HttpContext.Response.StatusCode = 401;
+            return Task.CompletedTask;
+        }
+    };
+});
 
 var mapperConfig = new MapperConfiguration((conf) =>
 {
@@ -35,6 +46,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

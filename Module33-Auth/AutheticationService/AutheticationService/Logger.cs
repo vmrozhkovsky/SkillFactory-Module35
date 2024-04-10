@@ -2,7 +2,7 @@
 
 public class Logger : ILogger
 {
-    private ReaderWriterLockSlim lock_ = new ReaderWriterLockSlim();
+    private ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
 
     private string logDirectory { get; set; }
 
@@ -16,7 +16,7 @@ public class Logger : ILogger
 
     public void WriteEvent(string eventMessage)
     {
-        lock_.EnterWriteLock();
+        _lock.EnterWriteLock();
         try
         {
             using (StreamWriter writer = new StreamWriter(logDirectory + "events.txt", append: true))
@@ -26,14 +26,14 @@ public class Logger : ILogger
         }
         finally
         {
-            lock_.ExitWriteLock();
+            _lock.ExitWriteLock();
         }
 
     }
 
     public void WriteError(string errorMessage)
     {
-        lock_.EnterWriteLock();
+        _lock.EnterWriteLock();
         try
         {
             using (StreamWriter writer = new StreamWriter(logDirectory + "errors.txt", append: true))
@@ -43,7 +43,7 @@ public class Logger : ILogger
         }
         finally
         {
-            lock_.ExitWriteLock();
+            _lock.ExitWriteLock();
         }
 
     }
