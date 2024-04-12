@@ -14,7 +14,11 @@ public class UserRepository : IUserRepository
             Id = Guid.NewGuid(),
             LastName = "Иванов",
             Login = "ivanov",
-            Password = "ivanov"
+            Password = "ivanov",
+            Role = new Role() {
+            Id = 1,
+            Name = "Пользователь"
+        }
         };
         User user2 = new User()
         {
@@ -23,7 +27,11 @@ public class UserRepository : IUserRepository
             Id = Guid.NewGuid(),
             LastName = "Петров",
             Login = "petrov",
-            Password = "petrov"
+            Password = "petrov",
+            Role = new Role() {
+                Id = 1,
+                Name = "Пользователь"
+            }
         };
         User user3 = new User()
         {
@@ -32,12 +40,17 @@ public class UserRepository : IUserRepository
             Id = Guid.NewGuid(),
             LastName = "Васильев",
             Login = "vasilev",
-            Password = "vasilev"
+            Password = "vasilev",
+            Role = new Role() {
+                Id = 2,
+                Name = "Администратор"
+            }
         };
         userList.Add(user1);
         userList.Add(user2);
         userList.Add(user3);
     }
+    
     public IEnumerable<User> GetAllUsers()
     {
         return userList;

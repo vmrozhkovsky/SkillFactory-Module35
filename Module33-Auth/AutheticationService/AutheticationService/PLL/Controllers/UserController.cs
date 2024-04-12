@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AutheticationService.Controllers;
 
+[ExceptonHandler]
 [ApiController]
 [Route("[controller]")]
 public class UserController : ControllerBase
@@ -15,32 +16,15 @@ public class UserController : ControllerBase
     private ILogger _logger;
     private IMapper _mapper;
     private IUserRepository _userRepository;
+
     public UserController(ILogger logger, IUserRepository userRepository, IMapper mapper)
     {
         _userRepository = userRepository;
         _logger = logger;
         _mapper = mapper;
-
-        logger.WriteEvent("Сообщение о событии в программе");
-        logger.WriteError("Сообщение об ошибки в программе");
-        
-
     }
-
-    [HttpGet]
-    public User GetUser()
-    {
-        return new User()
-        {
-            Id = Guid.NewGuid(),
-            FirstName = "Иван",
-            LastName = "Иванов",
-            Email = "ivan@gmail.com",
-            Password = "11111122222qq",
-            Login = "ivanov"
-        };
-    }
-    [Authorize]
+    
+    [Authorize(Roles = "Администратор")]
     [HttpGet]
     [Route("viewmodel")]
     public UserViewModel GetUserViewModel()
@@ -58,7 +42,8 @@ public class UserController : ControllerBase
 
         return userViewModel;
     }
-
+    
+    [Authorize(Roles = "Администратор")]
     [HttpGet]
     [Route("getallusers")]
     public IEnumerable<User> GetAll()
@@ -66,13 +51,12 @@ public class UserController : ControllerBase
         var users = _userRepository.GetAllUsers();
         return users;
     }
-    
-    [HttpPost]
+
+    [Authorize(Roles = "Администратор, Пользователь")]
+    [HttpGet]
     [Route("getuserbylogin")]
     public User GetUserByLogin(string userLogin)
     {
-        // Console.WriteLine("Введите логин пользователя:");
-        // string userLogin = Console.ReadLine();
         if (String.IsNullOrEmpty(userLogin))
             throw new ArgumentNullException("Запрос не корректен");
 
@@ -83,7 +67,7 @@ public class UserController : ControllerBase
         return user;
     }
     
-    [HttpPost]
+    [HttpGet]
     [Route("authenticate")]
     public async Task<UserViewModel> Authenticate(string login, string password) 
     {
@@ -100,7 +84,8 @@ public class UserController : ControllerBase
 
         var claims = new List<Claim>
         {
-            new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login)
+            new Claim(ClaimsIdentity.DefaultNameClaimType, user.Login),
+            new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name)
         };
 
         ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "AppCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
