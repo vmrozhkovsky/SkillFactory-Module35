@@ -1,4 +1,4 @@
-namespace AutheticationService;
+namespace HomeApi;
 
 public class WeatherForecast
 {
