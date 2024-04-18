@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeApi", "HomeApi\HomeApi.csproj", "{9FB32781-CE54-4431-8014-63CD32B62C8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeApi.Contracts", "HomeApi.Contracts\HomeApi.Contracts.csproj", "{F5CD29D8-3930-419A-9159-AD0661E778CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomeApi.Data", "HomeApi.Data\HomeApi.Data.csproj", "{3D1CF045-FFCC-4D7F-AEC2-887943BBA68F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,13 @@ Global
 		{9FB32781-CE54-4431-8014-63CD32B62C8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9FB32781-CE54-4431-8014-63CD32B62C8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9FB32781-CE54-4431-8014-63CD32B62C8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5CD29D8-3930-419A-9159-AD0661E778CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5CD29D8-3930-419A-9159-AD0661E778CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5CD29D8-3930-419A-9159-AD0661E778CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5CD29D8-3930-419A-9159-AD0661E778CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D1CF045-FFCC-4D7F-AEC2-887943BBA68F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D1CF045-FFCC-4D7F-AEC2-887943BBA68F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D1CF045-FFCC-4D7F-AEC2-887943BBA68F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D1CF045-FFCC-4D7F-AEC2-887943BBA68F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

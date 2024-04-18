@@ -1,42 +1,36 @@
-﻿using System.Text;
+﻿using AutoMapper;
 using HomeApi.Configuration;
-using Microsoft.AspNetCore.Http.HttpResults;
+using HomeApi.Contracts.Models.Home;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
-namespace HomeApi.Controllers;
-
-[ApiController]
-[Route("[controller]")]
-public class HomeController
+namespace HomeApi.Controllers
 {
-       private IOptions<HomeOptions> _options;
-       
-       public HomeController(IOptions<HomeOptions> options)
-       {
-           _options = options;
-       }
-       
-       [HttpGet]
-       [Route("info")]
-       public IActionResult Info()
-       {
-           var pageResult = new StringBuilder();
-           
-           pageResult.Append($"Добро пожаловать в API вашего дома!{Environment.NewLine}");
-           pageResult.Append($"Здесь вы можете посмотреть основную информацию.{Environment.NewLine}");
-           // pageResult.Append($"{Environment.NewLine}");
-           // pageResult.Append($"Количество этажей:         {_options.Value.FloorAmount}{Environment.NewLine}");
-           // pageResult.Append($"Стационарный телефон:      {_options.Value.Telephone}{Environment.NewLine}");
-           // pageResult.Append($"Тип отопления:             {_options.Value.Heating}{Environment.NewLine}");
-           // pageResult.Append($"Напряжение электросети:    {_options.Value.CurrentVolts}{Environment.NewLine}");
-           // pageResult.Append($"Подключен к газовой сети:  {_options.Value.GasConnected}{Environment.NewLine}");
-           // pageResult.Append($"Жилая площадь:             {_options.Value.Area} м2{Environment.NewLine}");
-           // pageResult.Append($"Материал:                  {_options.Value.Material}{Environment.NewLine}");
-           // pageResult.Append($"{Environment.NewLine}");
-           // pageResult.Append($"Адрес:                     {_options.Value.Address.Street} {_options.Value.Address.House}/{_options.Value.Address.Building}{Environment.NewLine}");
+    [ApiController]
+    [Route("[controller]")]
+    public class HomeController : ControllerBase
+    {
+        private IOptions<HomeOptions> _options;
+        private IMapper _mapper;
+        
+        // Инициализация конфигурации при вызове конструктора
+        public HomeController(IOptions<HomeOptions> options, IMapper mapper)
+        {
+            _options = options;
+            _mapper = mapper;
+        }
 
-           return StatusCode(200, pageResult.ToString());
-           sta
-       }
+        /// <summary>
+        /// Метод для получения информации о доме
+        /// </summary>
+        [HttpGet]
+        [Route("info")] 
+        public IActionResult Info()
+        {
+            // Получим запрос, смапив конфигурацию на модель запроса
+            var infoResponse = _mapper.Map<HomeOptions, InfoResponse>(_options.Value);
+            // Вернём ответ
+            return StatusCode(200, infoResponse);
+        }
+    }
 }
