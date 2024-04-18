@@ -33,7 +33,6 @@ builder.Services.Configure<HomeOptions>(config);
 var assembly = Assembly.GetAssembly(typeof(MappingProfile));
 builder.Services.AddAutoMapper(assembly);
 
-//builder.Services.AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<AddDeviceRequestValidator>());
 builder.Services.AddFluentValidationAutoValidation().AddValidatorsFromAssemblyContaining<AddDeviceRequestValidator>();
 
 builder.Services.AddSingleton<IDeviceRepository, DeviceRepository>();

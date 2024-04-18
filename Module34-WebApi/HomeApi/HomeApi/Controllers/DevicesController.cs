@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using HomeApi.Contracts.Models.Devices;
 using HomeApi.Data.Models;
 using HomeApi.Data.Queries;
@@ -10,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HomeApi.Controllers
 {
     /// <summary>
-    /// Контроллер устройсив
+    /// Контроллер устройств
     /// </summary>
     [ApiController]
     [Route("[controller]")]
@@ -31,7 +29,7 @@ namespace HomeApi.Controllers
         /// Просмотр списка подключенных устройств
         /// </summary>
         [HttpGet] 
-        [Route("")] 
+        [Route("GetAllDevices")] 
         public async Task<IActionResult> GetDevices()
         {
             var devices = await _devices.GetDevices();
@@ -45,13 +43,11 @@ namespace HomeApi.Controllers
             return StatusCode(200, resp);
         }
         
-        // TODO: Задание: напишите запрос на удаление устройства
-        
         /// <summary>
         /// Добавление нового устройства
         /// </summary>
         [HttpPost] 
-        [Route("")] 
+        [Route("AddDevice")] 
         public async Task<IActionResult> Add( AddDeviceRequest request )
         {
             var room = await _rooms.GetRoomByName(request.RoomLocation);

@@ -6,25 +6,25 @@ using HomeApi.Contracts.Models.Devices;
 namespace HomeApi.Contracts.Validation
 {
     /// <summary>
-    /// Класс-валидатор запросов обновления устройства
+    /// Класс-валидатор запросов обновления комнаты
     /// </summary>
-    public class EditDeviceRequestValidator : AbstractValidator<EditDeviceRequest>
+    public class EditRoomRequestValidator : AbstractValidator<EditRoomRequest>
     {
         /// <summary>
         /// Метод, конструктор, устанавливающий правила
         /// </summary>
-        public EditDeviceRequestValidator() 
+        public EditRoomRequestValidator() 
         {
-            RuleFor(x => x.NewName).NotEmpty(); 
-            RuleFor(x => x.NewRoom).NotEmpty().Must(BeSupported)
+            RuleFor(x => x.NewName).NotEmpty().Must(BeSupported)
                 .WithMessage($"Пожалуйста, выберите из доступных названий комнат: {string.Join(", ", Values.ValidRooms)}");
+            RuleFor(x => x.NewArea).NotEmpty();
+            RuleFor(x => x.NewVoltage).NotEmpty();
+            RuleFor(x => x.NewGasConnected).NotEmpty();
         }
         
-        /// <summary>
-        ///  Метод кастомной валидации для свойства location
-        /// </summary>
         private bool BeSupported(string location)
         {
+            // Проверим, содержится ли значение в списке допустимых
             return Values.ValidRooms.Any(e => e == location);
         }
     }
