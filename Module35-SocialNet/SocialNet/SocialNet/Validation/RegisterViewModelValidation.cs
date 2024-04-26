@@ -1,5 +1,5 @@
 using FluentValidation;
-using SocialNet.Models;
+using SocialNet.ViewModels.Account;
 
 namespace SocialNet.Validation;
 
