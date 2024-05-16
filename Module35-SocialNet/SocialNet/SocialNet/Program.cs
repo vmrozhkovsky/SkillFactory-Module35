@@ -1,12 +1,14 @@
 using System.Reflection;
+using SocialNet.Validation;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SocialNet;
 using SocialNet.Data;
+using SocialNet.Data.Repository;
+using SocialNet.Extentions;
 using SocialNet.Models.Users;
-using SocialNet.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,9 @@ builder.Services.AddRazorPages();
 
 string connection = config.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection), ServiceLifetime.Singleton)
+    .AddUnitOfWork()
+    .AddCustomRepository<Message, MessageRepository>()
+    .AddCustomRepository<Friend, FriendsRepository>()
     .AddIdentity<User, IdentityRole>(opts => {
         opts.Password.RequiredLength = 5;   
         opts.Password.RequireNonAlphanumeric = false;  
@@ -33,18 +38,29 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
     })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 // builder.Services.AddFluentValidationAutoValidation().AddValidatorsFromAssemblyContaining<RegisterViewModelValidation>();
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
 
 }
-
+else
+{
+    app.UseDeveloperExceptionPage();
+}
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+var cachePeriod = "0";
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        ctx.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
+    }
+});
 
 app.UseRouting();
 

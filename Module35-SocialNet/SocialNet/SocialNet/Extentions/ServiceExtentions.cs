@@ -1,10 +1,5 @@
 ﻿using SocialNet.Data.Repository;
 using SocialNet.Data.UoW;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SocialNet.Extentions
 {
@@ -18,8 +13,8 @@ namespace SocialNet.Extentions
         }
 
         public static IServiceCollection AddCustomRepository<TEntity, IRepository>(this IServiceCollection services)
-                 where TEntity : class
-                 where IRepository : class, IRepository<TEntity>
+            where TEntity : class
+            where IRepository : class, IRepository<TEntity>
         {
             services.AddScoped<IRepository<TEntity>, IRepository>();
 

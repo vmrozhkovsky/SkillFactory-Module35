@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SocialNet.ViewModels.Account
 {
@@ -19,11 +14,6 @@ namespace SocialNet.ViewModels.Account
         [DataType(DataType.Text)]
         [Display(Name = "Фамилия", Prompt = "Введите фамилию")]
         public string LastName { get; set; }
-        
-        [Required(ErrorMessage ="Поле Отчество обязательно для заполнения")]
-        [DataType(DataType.Text)]
-        [Display(Name = "Фамилия", Prompt = "Введите отчество")]
-        public string MiddleName { get; set; }
 
         [Required(ErrorMessage = "Поле Email обязательно для заполнения")]
         [EmailAddress]
@@ -54,10 +44,7 @@ namespace SocialNet.ViewModels.Account
         [Display(Name = "Подтвердить пароль", Prompt = "Введите пароль повторно")]
         public string PasswordConfirm { get; set; }
 
-        [Required(ErrorMessage = "Поле Никнейм обязательно для заполнения")]
-        [DataType(DataType.Text)]
-        [Display(Name = "Никнейм", Prompt = "Введите никнейм")]
-        public string Login { get; set; }
+        public string Login => EmailReg;
 
     }
 }

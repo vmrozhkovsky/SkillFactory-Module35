@@ -34,7 +34,9 @@ namespace SocialNet.Controllers.Account
         {
             return View("RegisterPart2", model);
         }
-        
+
+
+
         [Route("Register")]
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)

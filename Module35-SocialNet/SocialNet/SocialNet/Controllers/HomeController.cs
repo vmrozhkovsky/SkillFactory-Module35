@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using SocialNet.Models;
-using SocialNet.Data.UoW;
-using AutoMapper;
 using SocialNet.ViewModels.Account;
 
 namespace SocialNet.Controllers
