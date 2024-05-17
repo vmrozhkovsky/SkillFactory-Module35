@@ -14,9 +14,9 @@ namespace SocialNet.ViewModels.Account
         [Display(Name = "Пароль", Prompt = "Введите пароль")]
         public string Password { get; set; }
 
-        [Display(Name = "Запомнить?")]
-        public bool RememberMe { get; set; }
+        [Display(Name = "Запомнить?")] 
+        public bool RememberMe { get; set; } = false;
         
-        public string ReturnUrl { get; set; }
+        public string ReturnUrl { get; set; } = string.Empty;
     }
 }
