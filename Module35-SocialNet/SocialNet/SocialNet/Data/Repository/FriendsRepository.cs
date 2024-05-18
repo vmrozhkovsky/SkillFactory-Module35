@@ -31,9 +31,14 @@ namespace SocialNet.Data.Repository
 
         public List<User> GetFriendsByUser(User target)
         {
-            var friends = Set.Include(x => x.CurrentFriend).AsEnumerable().Where(x => x.User.Id == target.Id).Select(x => x.CurrentFriend);
+            var userFriends = Set.AsEnumerable().FirstOrDefault(x => x.UserId == target.Id);
+            if (userFriends != null)
+            {
+                var friends = Set.Include(x => x.CurrentFriend).AsEnumerable().Where(x => x.UserId == target.Id).Select(x => x.CurrentFriend);
+                return friends.ToList();
+            }
 
-            return friends.ToList();
+            return new List<User>();
         }
 
 
