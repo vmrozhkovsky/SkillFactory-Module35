@@ -5,8 +5,7 @@ namespace SocialNet.Data.Repository
 {
     public class MessageRepository : Repository<Message>
     {
-        public MessageRepository(ApplicationDbContext db)
-            : base(db)
+        public MessageRepository(ApplicationDbContext db) : base(db)
         {
 
         }

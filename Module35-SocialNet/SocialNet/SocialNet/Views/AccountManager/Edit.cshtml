@@ -66,4 +66,10 @@
             <input class="btn_submit" type="submit" value="Сохранить" />
         </div>
     </form>
+    <form class="frm" method="post" asp-controller="AccountManager" asp-action="DeleteUser">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="center">
+            <input class="btn_submit" type="submit" value="Удалить" />
+        </div>
+    </form>
 </div>

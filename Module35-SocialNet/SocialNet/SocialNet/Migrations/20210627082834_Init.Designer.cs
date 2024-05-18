@@ -69,7 +69,7 @@ namespace SocialNet.Migrations
 
                     b.HasIndex("SenderId");
 
-                    b.ToTable("Mesages");
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("SocialNet.Models.Users.User", b =>
@@ -290,15 +290,15 @@ namespace SocialNet.Migrations
                 });
 
             modelBuilder.Entity("SocialNet.Models.Users.Friend", b =>
-                {
-                    b.HasOne("SocialNet.Models.Users.User", "CurrentFriend")
-                        .WithMany()
-                        .HasForeignKey("CurrentFriendId");
+            {
+                b.HasOne("SocialNet.Models.Users.User", "CurrentFriend")
+                    .WithMany()
+                    .HasForeignKey("CurrentFriendId");
 
-                    b.HasOne("SocialNet.Models.Users.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-                });
+                b.HasOne("SocialNet.Models.Users.User", "User")
+                    .WithMany()
+                    .HasForeignKey("UserId");
+            });
 
             modelBuilder.Entity("SocialNet.Models.Users.Message", b =>
                 {

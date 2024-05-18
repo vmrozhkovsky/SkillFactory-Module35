@@ -138,6 +138,23 @@ namespace SocialNet.Controllers.Account
                 return View("Edit", model);
             }
         }
+        
+        public async Task<IActionResult> DeleteUser()
+        {
+            var user = User;
+
+            var result = await _userManager.GetUserAsync(user);
+            
+            var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
+            
+            await _signInManager.SignOutAsync();
+            
+            repository.ClearFriends(result);
+            
+            await _userManager.DeleteAsync(result);
+
+            return RedirectToAction("Index", "Home");
+        }
 
         [Route("Login")]
         [HttpPost]
@@ -318,7 +335,7 @@ namespace SocialNet.Controllers.Account
                 Text = chat.NewMessage.Text,
             };
             repository.Create(item);
-
+            ModelState.Clear();
             var model = await GenerateChat(id);
             return View("Chat", model);
         }

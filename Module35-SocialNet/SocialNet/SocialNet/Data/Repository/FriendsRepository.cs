@@ -1,4 +1,5 @@
-﻿using SocialNet.Models.Users;
+﻿using Microsoft.AspNetCore.Mvc;
+using SocialNet.Models.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace SocialNet.Data.Repository
@@ -11,9 +12,26 @@ namespace SocialNet.Data.Repository
         }
         
 
-        public void AddFriend (User target, User friend)
+        // public async void AddFriend (User target, User friend)
+        // {
+        //    var friends = Set.AsEnumerable().FirstOrDefault(x => x.UserId == target.Id && x.CurrentFriendId == friend.Id);
+        //
+        //     if (friends == null)
+        //     {
+        //         var item = new Friend()
+        //         {
+        //             UserId = target.Id,
+        //             User = target,
+        //             CurrentFriend = friend,
+        //             CurrentFriendId = friend.Id,
+        //         };
+        //
+        //         await Create(item);
+        //     }
+        // }
+        public void AddFriend (User target, User Friend)
         {
-            var friends = Set.AsEnumerable().FirstOrDefault(x => x.UserId == target.Id && x.CurrentFriendId == friend.Id);
+            var friends = Set.AsEnumerable().FirstOrDefault(x => x.UserId == target.Id && x.CurrentFriendId == Friend.Id);
 
             if (friends == null)
             {
@@ -21,11 +39,11 @@ namespace SocialNet.Data.Repository
                 {
                     UserId = target.Id,
                     User = target,
-                    CurrentFriend = friend,
-                    CurrentFriendId = friend.Id,
+                    CurrentFriend = Friend,
+                    CurrentFriendId = Friend.Id,
                 };
 
-                 Create(item);
+                Create(item);
             }
         }
 
@@ -42,13 +60,32 @@ namespace SocialNet.Data.Repository
         }
 
 
-        public void DeleteFriend(User target, User friend)
+        // public async void DeleteFriend(User target, User friend)
+        // {
+        //     var friends = Set.AsEnumerable().FirstOrDefault(x => x.UserId == target.Id && x.CurrentFriendId == friend.Id);
+        //
+        //     if (friends != null)
+        //     {
+        //         await Delete(friends);
+        //     }
+        // }
+        public void DeleteFriend(User target, User Friend)
         {
-            var friends = Set.AsEnumerable().FirstOrDefault(x => x.UserId == target.Id && x.CurrentFriendId == friend.Id);
+            var friends = Set.AsEnumerable().FirstOrDefault(x => x.UserId == target.Id && x.CurrentFriendId == Friend.Id);
 
             if (friends != null)
             {
                 Delete(friends);
+            }
+        }
+
+        public void ClearFriends(User user)
+        {
+            // var friends = Set.OrderBy(x => x.Id).Include(x => x.UserId == user.Id || x.CurrentFriendId == user.Id).ToList();
+            var friends = Set.AsEnumerable().Where(x => x.UserId == user.Id || x.CurrentFriendId == user.Id).ToList();
+            foreach (var friend in friends)
+            {
+                Delete(friend);
             }
         }
 
