@@ -145,11 +145,12 @@ namespace SocialNet.Controllers.Account
 
             var result = await _userManager.GetUserAsync(user);
             
-            var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
-            
+            var friendsRepository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
+            var messagesRepository = _unitOfWork.GetRepository<Message>() as MessageRepository;
             await _signInManager.SignOutAsync();
             
-            repository.ClearFriends(result);
+            friendsRepository.ClearFriends(result);
+            messagesRepository.ClearMessages(result);
             
             await _userManager.DeleteAsync(result);
 
@@ -334,7 +335,7 @@ namespace SocialNet.Controllers.Account
                 Recipient = friend,
                 Text = chat.NewMessage.Text,
             };
-            repository.Create(item);
+            await repository.Create(item);
             ModelState.Clear();
             var model = await GenerateChat(id);
             return View("Chat", model);
