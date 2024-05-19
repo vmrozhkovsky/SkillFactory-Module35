@@ -149,8 +149,8 @@ namespace SocialNet.Controllers.Account
             var messagesRepository = _unitOfWork.GetRepository<Message>() as MessageRepository;
             await _signInManager.SignOutAsync();
             
-            friendsRepository.ClearFriends(result);
-            messagesRepository.ClearMessages(result);
+            friendsRepository.ClearFriendsAsync(result);
+            messagesRepository.ClearMessagesAsync(result);
             
             await _userManager.DeleteAsync(result);
 
@@ -219,7 +219,7 @@ namespace SocialNet.Controllers.Account
 
             var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
 
-            repository.AddFriend(result, friend);
+            await repository.AddFriendAsync(result, friend);
 
 
             return RedirectToAction("MyPage", "AccountManager");
@@ -238,7 +238,7 @@ namespace SocialNet.Controllers.Account
 
             var repository = _unitOfWork.GetRepository<Friend>() as FriendsRepository;
 
-            repository.DeleteFriend(result, friend);
+            await repository.DeleteFriendAsync(result, friend);
 
             return RedirectToAction("MyPage", "AccountManager");
 

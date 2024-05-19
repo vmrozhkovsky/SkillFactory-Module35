@@ -14,7 +14,6 @@ namespace SocialNet.Data.Repository
         {
             Set.Include(x => x.Recipient);
             Set.Include(x => x.Sender);
-
             var from = Set.AsEnumerable().Where(x => x.SenderId == sender.Id && x.RecipientId == recipient.Id).ToList();
             var to = Set.AsEnumerable().Where(x => x.SenderId == recipient.Id && x.RecipientId == sender.Id).ToList();
 
@@ -25,7 +24,7 @@ namespace SocialNet.Data.Repository
             return itog;
         }
         
-        public async void ClearMessages(User user)
+        public async Task ClearMessagesAsync(User user)
         {
             var messages = Set.AsEnumerable().Where(x => x.SenderId == user.Id || x.RecipientId == user.Id).ToList();
             foreach (var message in messages)

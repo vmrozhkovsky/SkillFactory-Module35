@@ -12,9 +12,9 @@ namespace SocialNet.Data.Repository
         }
         
 
-        public async Task AddFriend (User target, User friend)
+        public async Task AddFriendAsync (User target, User friend)
         {
-           var friends = Set.AsEnumerable().FirstOrDefault(x => x.UserId == target.Id && x.CurrentFriendId == friend.Id);
+           var friends = await Set.FirstOrDefaultAsync(x => x.UserId == target.Id && x.CurrentFriendId == friend.Id);
         
             if (friends == null)
             {
@@ -69,9 +69,9 @@ namespace SocialNet.Data.Repository
         //         Delete(friends);
         //     }
         // }
-        public async void DeleteFriend(User target, User friend)
+        public async Task DeleteFriendAsync(User target, User friend)
         {
-            var friends = Set.AsEnumerable().FirstOrDefault(x => x.UserId == target.Id && x.CurrentFriendId == friend.Id);
+            var friends = await Set.FirstOrDefaultAsync(x => x.UserId == target.Id && x.CurrentFriendId == friend.Id);
 
             if (friends != null)
             {
@@ -79,7 +79,7 @@ namespace SocialNet.Data.Repository
             }
         }
 
-        public async void ClearFriends(User user)
+        public async Task ClearFriendsAsync(User user)
         {
             var friends = Set.AsEnumerable().Where(x => x.UserId == user.Id || x.CurrentFriendId == user.Id).ToList();
             foreach (var friend in friends)
